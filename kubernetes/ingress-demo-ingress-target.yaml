@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-app
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     kubernetes.io/ingress.class: "nginx"
 
 spec:
@@ -11,7 +11,7 @@ spec:
     - host: hello-worldapp.com
       http:
         paths:
-          - path: /hello
+          - path: /hello(/|$)(.*)
             pathType: Prefix
             backend:
               service:
