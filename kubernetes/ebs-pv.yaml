@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ebs-pv
+
+spec:
+  capacity:
+    storage: 5Gi # volume size
+  accessModes:
+    - ReadWriteOnce # 1개의 pod에 의해서만 mount될 수 있음
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: <VOLUME_ID>

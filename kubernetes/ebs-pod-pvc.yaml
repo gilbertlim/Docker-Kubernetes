@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-ebs-pvc
+spec:
+  resources:
+    requests:
+      storage: 5Gi # Volume size가 5Gi인 PV와 연결하겠다.
+  accessModes:
+    - ReadWriteOnce # 속성이 ReadWriteOnce 인 PV와 연결하겠다.
+  storageClassName: ""
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-mount-container
+
+spec:
+  containers:
+  - name: ebs-mount-container
+
+    image: busybox
+    args: ["tail", "-f", "/dev/null"]
+    volumeMounts:
+      - name:  ebs-volume
+        mountPath: /mnt
+
+volumes:
+  - name:  ebs-volume
+    persistentVolumeClaim:
+      claimName: my-ebs-pvc
