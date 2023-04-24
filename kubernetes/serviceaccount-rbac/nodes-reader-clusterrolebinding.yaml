@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: node-reader-clusterrolebinding
+  namespace: default
+
+subjects:
+- kind: ServiceAccount # 권한을 부여할 대상
+  name: alicek106 # 대상의 이름
+  namespace: default
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole # Role에 정의된 권한 부여
+  name: node-reader # 이 이름의 role을 subjects에 연결

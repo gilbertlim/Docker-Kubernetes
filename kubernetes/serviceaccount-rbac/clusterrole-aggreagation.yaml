@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: parent-clusterrole
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-child-clusterrole: "true"
+
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get","list"]
+
+
+---
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: child-clusterrole
+
+aggregationRule:
+  clusterRoleSelectors: # 포함시키고자 하는 다른 클러스터 롤을 라벨 셀렉터로 선택
+    - matchLabels:
+        rbac.authorization.k8s.io/aggregate-to-child-clusterrole: "true"
+rules: []
