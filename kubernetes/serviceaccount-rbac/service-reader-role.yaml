@@ -8,3 +8,6 @@ rules:
   - apiGroups: [""]         # 대상이 될 object의 API 그룹
     resources: ["services"] # 대상이 될 object의 이름
     verbs: ["get", "list"]  # 어떤 동작을 허용할 것인지 명시
+  - apiGroups: [""]         # 대상이 될 object의 API 그룹
+    resources: ["pods"] # 대상이 될 object의 이름
+    verbs: ["get", "list"]  # 어떤 동작을 허용할 것인지 명시

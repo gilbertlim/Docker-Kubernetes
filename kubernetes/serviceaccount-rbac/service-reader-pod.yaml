@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name:  alicek106
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: service-reader
+  
+spec:
+  serviceAccountName: alicek106
+  containers:
+  - name: service-reader
+    image: ubuntu
+    command: ["tail"]
+    args: ["-f", "/dev/null"]
