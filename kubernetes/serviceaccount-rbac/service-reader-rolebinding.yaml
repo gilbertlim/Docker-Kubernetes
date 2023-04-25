@@ -13,3 +13,16 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role # Role에 정의된 권한 부여
   name: service-reader # 이 이름의 role을 subjects에 연결
+
+
+---
+
+# k8s v1.24 부터는 secret이 자동으로 생성되지 않음
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alicek106-token
+  annotations:
+    kubernetes.io/service-account.name: alicek106
+type: kubernetes.io/service-account-token
