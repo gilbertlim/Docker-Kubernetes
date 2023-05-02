@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-nginx
+labels:
+  app: deployment-nginx
+spec:
+  selector:
+    matchLabels:
+      app: deployment-nginx
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - deployment-ngninx
+          topologyKey: kuberntes.io/hostname
+  template:
+    metadata:
+      name: my-webserver
+      labels:
+        app: deployment-nginx
+    spec:          
+      containers:
+      - name: deployment-nginx
+        image: nginx:latest

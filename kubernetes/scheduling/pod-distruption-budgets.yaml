@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDistruptionBudget
+metadata:
+  name: simple-pdb-example
+spec:
+  maxUnavailable: 1
+  # minAvailable: 2
+  selector:
+    matchLabels:
+      app: webserver # pod label 입력 (deployment 같은 컨트롤러 라벨 X)
