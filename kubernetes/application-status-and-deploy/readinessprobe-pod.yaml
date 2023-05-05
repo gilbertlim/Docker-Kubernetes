@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readinessprobe-deploy
+spec:
+  selector:
+    matchLabels:
+      my-probe: test
+  replicas: 3
+  template:
+    metadata:
+      name: readinessprobe-pod
+      labels:
+        my-probe: test
+    spec:
+      containers:
+      - name: readinessprobe-pod
+        image: nginx
+        readinessProbe:
+          httpGet:
+            port: 80
+            path: /
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  readnessprobe-svc
+spec:
+  selector:
+    my-probe: test
+  ports:
+  - name: nginx
+    port: 80
+    targetPort: 80
+  type: ClusterIP  
