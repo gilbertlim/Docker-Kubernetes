@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-hello-world
+spec:
+  completions: 4
+  parallelism: 3
+  backoffLimit: 5
+  activeDeadlineSeconds: 10
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: busybox
+        args: ["sh", "-c", "echo Hello, World && exit 0"]
+        name: job-hello-world

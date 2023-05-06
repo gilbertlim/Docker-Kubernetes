@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-pvc-example
+spec:
+  selector:
+    matchLabels:
+      app: statefulset-pvc-example
+  serviceName: "statefulset-pvc-service"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: statefulset-pvc-example
+    spec:
+      containers:
+      - name: statefulset-pvc-example
+        image: alicek106/rr-test:echo-hostname
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+          - name: webserver-files
+            mountPath: /var/www/html/
+
+  volumeClaimTemplates:
+  - metadata:
+      name: webserver-files
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: generic
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: statefulset-pvc-service
+spec:
+  selector:
+    app: statefulset-pvc-example
+  clusterIP: None
+  ports:
+  - name: default-port
+    protocol: TCP
+    port: 80
+    targetPort: 80

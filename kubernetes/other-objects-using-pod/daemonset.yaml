@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-example
+spec:
+  selector:
+    matchLabels:
+      app: ds-example
+  
+  template:
+    metadata:
+      labels:
+        app: ds-example
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: daemonset-example
+        image: busybox
+        args: ["tail", "-f", "/dev/null"]
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200Mi
