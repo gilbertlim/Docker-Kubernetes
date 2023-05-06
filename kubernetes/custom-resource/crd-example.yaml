@@ -1,0 +1,29 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: alices.k106.com
+spec:
+  group: k106.com
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          required: ["spec"]
+          properties:
+            spec:
+              type: object
+              required: ["myvalue"]
+              properties:
+                myvalue:
+                  type: "string"
+                  minimum: 1
+  scope: Namespaced
+  names:
+    plural: alices
+    singular: alice
+    kind: Alice
+    shortNames:
+      - ct
